@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:12:14 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/02/27 18:37:01 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:00:27 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ int	main(int ac, char **av)
 {
 	t_game game;
 
-	char **new_map;
 	init(&game);
+	
 
-	int fd = valid_args(ac, av[1]);
+	end_game(&game);
+	
+	game->fd = valid_args(ac, av[1]);
 	if (fd != -1)
 	{
 		char **map = get_matrix(fd, 0, NULL);
