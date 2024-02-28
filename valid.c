@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:43:55 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/02/27 19:06:15 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/02/28 00:30:25 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,18 @@ int is_ber(char *av)
     return (0);
 }
 
-int valid_args(int ac, char *file)
+int valid_args(int ac, char *file, t_game *game)
 {
-    int map_fd;
-
     if (ac < 2)
         return(ft_printerror("ERROR: Insert map to launch, try:\n./so_long map.ber\n"));
     else if (ac > 2)
         return(ft_printerror("ERROR: Too many arguments, try:\n./so_long map.ber\n"));
     else if (!is_ber(file))
         return(ft_printerror("ERROR: Insert map in .ber format\n"));
-    map_fd = open(file, O_RDONLY);
-    if (map_fd == -1)
+    game->fd = open(file, O_RDONLY);
+    if (game->fd == -1)
         return(ft_printerror("ERROR: .ber has invalid permissions (man chmod)\n"));
-    return (map_fd);
+    return (0);
 }
 
 char **get_matrix(int fd, int counter, char **map)
@@ -91,6 +89,8 @@ char **map_trim(char **map)
 	return (map);
 }
 
+
+
 static void	flood_fill(char **temp, char **map, int x, int y)
 {
 	if (check_pos(temp, map, x + 1, y))
@@ -103,11 +103,9 @@ static void	flood_fill(char **temp, char **map, int x, int y)
 		flood_fill(temp, map, x, y - 1);
 }
 
-int check_map(char **map)
+int	check_path(t_game *game)
 {
-	char **temp;
-
-	temp = map;
+	return 0;
 	
 }
 
@@ -141,7 +139,7 @@ int check_objs(char **map)
 		return (ft_printerror("Missing chars: 1 exit, 1 player and at least 1 collectible\n"));
 	else if (e > 1 || p > 1)
 		return (ft_printerror("Only 1 exit and 1 player are allowed\n"));
-	return (check_path(map));
+	return (0);
 }
 
 int check_walls(char **map)
@@ -168,23 +166,23 @@ int check_walls(char **map)
 	return (check_objs(map));
 }
 
-int	check_square(char **map)
+/* this function starts by checking wether it's a rectangle of not */
+int	check_map(t_map *map, char **matrix)
 {
 	int i = 0;
-	int width = 0;
 
-	while (map[i])
+	while (matrix[i])
 	{
 		int j = 0;
-		while (map[i][j])
+		while (matrix[i][j])
 		{
 			j++;
 			if (i == 0)
-				width = j;
+				map->width = j;
 		}
-		if (j != width)
+		if (j != map.width)
 			return (ft_printerror("The map is not a rectangle\n"));
 		i++;
 	}
-	return (check_walls(map));
+	return (check_walls(map, matrix));
 }

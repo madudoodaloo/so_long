@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/02/27 20:57:41 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/02/28 00:16:37 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	t_obj c;
-	t_obj e;
-	t_obj wall;
-	t_obj floor;
+	t_obj *c;
+	t_obj *e;
+	t_obj *wall;
+	t_obj *floor;
 	t_player player;
+	char	**matrix;
+	char	**temp;
 	int width; /* x */
 	int height; /* y */
 }	t_map;

@@ -28,6 +28,9 @@ void init_map(t_map *map)
     map->floor=NULL;
     map->width = 0;
     map->height = 0;
+    map->fd = -1;
+    map->matrix = NULL;
+    map->temp = NULL;
     init_player(&map->player);
 }
 
@@ -35,6 +38,5 @@ void init(t_game *game)
 {
     game->mlx = NULL;
     game->mlx_win = NULL;
-    game->fd = -1;
     init_map(&game->map);
 }
