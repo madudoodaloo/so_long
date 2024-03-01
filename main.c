@@ -5,69 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 18:12:14 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/02/28 00:33:23 by msilva-c         ###   ########.fr       */
+/*   Created: 2024/02/29 21:44:18 by msilva-c          #+#    #+#             */
+/*   Updated: 2024/03/01 08:48:33 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*int	key_handler(int keycode, t_game *mlx)
-{
-	if (keycode == ESC)
-	{
-		mlx_destroy_window(mlx->mlx, mlx->mlx_win);
-		mlx_loop_end(mlx->mlx);
-	}
-	else if (keycode == UP)
-	{
-		mlx->bean.y -= SQSIZE;
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bean.img.img,
-			mlx->bean.x, mlx->bean.y);
-	}
-	else if (keycode == DOWN)
-	{
-		mlx->bean.y += SQSIZE;
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bean.img.img,
-			mlx->bean.x, mlx->bean.y);
-	}
-	else if (keycode == LEFT)
-	{
-		mlx->bean.x -= SQSIZE;
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bean.img.img,
-			mlx->bean.x, mlx->bean.y);
-	}
-	else if (keycode == RIGHT)
-	{
-		mlx->bean.x += SQSIZE;
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bean.img.img,
-			mlx->bean.x, mlx->bean.y);
-	}
-	printf("%i\n", keycode);
-} */
 
-int	start_game(t_game *game)
+
+void	game_init(t_prog *prog)
 {
-		game.mlx = mlx_init();
-		game.mlx_win = mlx_new_window(mlx.mlx, 400, 200, "Duck it out!");
-		game mlx_xpm_file_to_image(mlx.mlx, "./assets/1.xpm",
-				&mlx.bean.img.width, &mlx.bean.img.height);
-		mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.bean.img.img, 0, 0);
-		mlx_key_hook(mlx.mlx_win, &key_handler, &mlx);
-		mlx_loop(mlx.mlx);
-	
+	prog->mlx = mlx_init();
+	prog->win = mlx_new_window(prog->mlx, prog->game.width * 64, prog->game.height * 64, "SO_LONG");
+	//game.img = malloc(sizeof(t_img));
+	// game.moves = 0;
+	// game.map.over = 0;
+	get_imgs(&prog->game, prog);
+	draw_imgs(prog,&prog->game);
+	// mlx_key_hook(game.win, read_keys, &game);
+	// mlx_hook(game.win, 17, 0, exit_game, &game);
+	mlx_loop(prog->mlx);
 }
 
 int	main(int ac, char **av)
 {
-	t_game game;
-
-	init(&game);
-	if (!valid_args(ac, av[1], &game.map) && game.map.fd != -1)
+	t_prog prog;
+	
+	if (!check_args(ac, av[1]))
 	{
-		game->matrix = map_trim(get_matrix(fd, 0, NULL));
-		if (game->matrix && !check_square(&game.map, game.map.matrix) && !check_path(&game))
-			start_game(&game);
-	}	
-	end_game(&game);
+		init(&prog);
+		
+		prog.game.fd = open(av[1], O_RDONLY);
+		if (prog.game.fd != -1)
+		{
+			prog.game.map = get_matrix(prog.game.fd, 0, NULL);
+			int i = check_matrix(&prog.game, prog.game.map);
+			game_init(&prog);
+		}
+		else
+			return (3);
+		end_prog(&prog);
+	}
+	return (0);
 }
+
+// 3: "ERROR: failed to open the given map (man chmod)\n";

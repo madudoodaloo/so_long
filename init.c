@@ -1,42 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/01 04:13:35 by msilva-c          #+#    #+#             */
+/*   Updated: 2024/03/01 08:42:24 by msilva-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void init_img(t_img *img)
+static void init_img(t_img *img)
 {
     img->height=0;
     img->width=0;
     img->img=NULL;
 }
 
-void init_obj(t_obj *obj) 
+static void init_obj(t_obj *obj) 
 {
     init_img(&obj->img);
     obj->x=0;
     obj->y=0;
+    obj->count=0;
 }
 
-void init_player(t_player *player) 
+static void init_game(t_game *game)
 {
-    init_obj(&player->p);
-    init_img(&player->p_end);
+    game->fd = -1;
+    game->cc = 0;
+    game->width = 0;
+    game->height = 0;
+    game->map = NULL;
+    game->temp = NULL;
+    //init_obj(game->c); /* seg fault alert */
+    init_obj(&game->e);
+    init_obj(&game->p);
+    init_obj(&game->wall);
+    init_obj(&game->floor);
+    init_obj(&game->p_eog);
+    init_obj(&game->e_eog);
+    init_obj(&game->c);
+
 }
 
-void init_map(t_map *map) 
+void init(t_prog *prog)
 {
-    map->c=NULL;
-    map->e=NULL;
-    map->wall=NULL;
-    map->floor=NULL;
-    map->width = 0;
-    map->height = 0;
-    map->fd = -1;
-    map->matrix = NULL;
-    map->temp = NULL;
-    init_player(&map->player);
-}
-
-void init(t_game *game)
-{
-    game->mlx = NULL;
-    game->mlx_win = NULL;
-    init_map(&game->map);
+    prog->h = 0;
+    prog->w = 0;
+    prog->mlx = NULL;
+    prog->win = NULL;
+    init_game(&prog->game);
 }

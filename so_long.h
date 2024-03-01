@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/02/28 00:16:37 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/01 08:46:55 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@
 #define LEFT 65361
 #define RIGHT 65363
 #define SQSIZE 64
-#define WHITESPACES " \f\n\r\t\v"
 
 typedef struct img_s
 {
-	void	*img;
 	int		width;
 	int		height;
+	void	*img;
 }			t_img;
 
 typedef struct s_obj
@@ -43,41 +42,70 @@ typedef struct s_obj
 	t_img img;
 }	t_obj;
 
-typedef struct s_player
-{
-	t_obj	p;
-	t_img	p_end;
-}	t_player;
-
-typedef struct s_map
-{
-	t_obj *c;
-	t_obj *e;
-	t_obj *wall;
-	t_obj *floor;
-	t_player player;
-	char	**matrix;
-	char	**temp;
-	int width; /* x */
-	int height; /* y */
-}	t_map;
-
 typedef struct s_game
 {
-	void	*mlx;
-	void	*mlx_win;
 	int		fd;
-	t_map 	map;
-}			t_game;
+	int		cc; /* collectibles count */
+	t_obj	c;
+	t_obj 	e;
+	t_obj	p;
+	t_obj 	wall;
+	t_obj 	floor;
+	t_obj	p_eog; /* duck with flower */
+	t_obj	e_eog; /* pata happy */
+	int 	width; /* x */
+	int 	height; /* y */
+	char	**map;
+	char	**temp;
+}	t_game;
+
+typedef struct s_prog
+{
+	void	*mlx;
+	void	*win;
+	t_game 	game;
+	int	w;
+	int h;
+}			t_prog;
 
 
-int		ft_strlen(char *str);
-int		ft_printerror(char *msg);
-int		is_ber(char *av);
-int		ft_error(char c);
-char	*ft_strtrim(char const *s1, char const *set);
-char	**get_matrix(int fd, int counter, char **map);
-int		valid_args(int ac, char *map);
-char 	**map_trim(char **map);
+
+/* init */
+void init(t_prog *prog);
+void end_prog(t_prog *prog);
+
+
+/* args.c */
+int check_args(int ac, char *file);
+int is_ber(char *file);
+
+/* matrix.c */
+char **get_matrix(int fd, int counter, char **map);
+int is_rect(t_game *game, char **map);
+int check_walls(t_game *game, char **map);
+int check_chars(t_game *game, char **map);
+int check_matrix(t_game *game, char **map);
+
+/* paths.c */
+char **cpy_matrix(char **src, int height);
+void	get_coord(t_game *game, t_obj *token, char c);
+int	check_pos(char **temp, t_game *game, int x, int y);
+void	flood_fill(char **temp, t_game *game, int x, int y);
+int check_path(t_game *game, char **map);
+
+/* str_utils.c */
+int ft_strlen(char *str);
+char *ft_strdup(char *str);
+int	str_srch(char *str, char c);
+void    free_matrix(char **map);
+void printhere(char **str);
+
+/* imgs */
+void	put_img(t_prog *prog, void *img, int x, int y);
+void	draw_imgs(t_prog *prog, t_game *game);
+void	*new_file_img(char *path, t_prog *prog);
+void	get_imgs(t_game *game, t_prog *prog);
+
+
 
 #endif
