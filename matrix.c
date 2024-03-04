@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:09:50 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 20:49:17 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:05:34 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char **get_matrix(int fd, int counter, char **map)
 	if (line)
 		map = get_matrix(fd, counter + 1, map);
 	if (!map)
-		map = malloc(sizeof(char *) * (counter + 1));
+		map = ft_calloc(sizeof(char *), (counter + 1));
 	map[counter] = line;
 	return (map);
 }
@@ -105,15 +105,10 @@ void update_size(t_game *game)
 	int h;
 	
 	h = 0;
-	//printf("%d\n", game->width);
 	game->width = ft_strlen(game->map[0]);
-	printf("%d\n", game->width);
-	//printf("%d\n", game->height);
 	while (game->map[h])
 			h++;
 	game->height = h;
-	printf("%d\n", game->height);
-
 }
 
 int check_matrix(t_prog *prog, t_game *game, char **map)

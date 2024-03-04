@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 20:47:10 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:03:39 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int			print_error(int n, t_prog *prog);
 /* trim */
 char **trim_nl(char **map);
 void update_size(t_game *game);
+void	*ft_calloc(size_t nmemb, size_t n);
 
 
 

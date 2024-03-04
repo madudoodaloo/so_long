@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:00:39 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 20:29:34 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:05:55 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*ft_strtrim(char const *s1, char const *set)
 	n = ft_strlen((char *)s1);
 	while (ft_setchecker(set, s1[n - 1]) && i < n)
 		n--;
-	str = (char *)malloc(sizeof(char) * (n - i + 1));
+	str = (char *)ft_calloc(sizeof(char), (n - i + 1));
 	if (!str)
 		return (NULL);
 	f = 0;
@@ -66,7 +66,7 @@ char **trim_nl(char **map)
     char **temp;
     int size;
     size = size_dp(map);
-    temp = malloc(sizeof(char *) * size + 1);
+    temp = ft_calloc(sizeof(char *), size + 1);
     int i;
     i = 0;
     while (size)

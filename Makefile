@@ -4,13 +4,13 @@ SRCS = gnl/get_next_line_utils.c \
 gnl/get_next_line.c \
 paths.c args.c free.c imgs.c \
 init.c libft.c matrix.c moves.c \
-trim.c print.c main.c
+trim.c print.c ft_calloc.c main.c
 
 
 OBJS = ${SRCS:.c=.o}
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
 
 all: $(NAME)
 
