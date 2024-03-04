@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:00:39 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 22:05:55 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:20:50 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,30 @@ static char	*ft_strtrim(char const *s1, char const *set)
 	return (str);
 }
 
-static int size_dp(char **map)
+static int	size_dp(char **map)
 {
-    int i;
-    i = 0;
+	int	i;
 
-    while(map[i])
-        i++;
-    return (i);
+	i = 0;
+	while (map[i])
+		i++;
+	return (i);
 }
 
-char **trim_nl(char **map)
+char	**trim_nl(char **map)
 {
-    char **temp;
-    int size;
-    size = size_dp(map);
-    temp = ft_calloc(sizeof(char *), size + 1);
-    int i;
-    i = 0;
-    while (size)
-    {
-        temp[i] = ft_strtrim(map[i],"\n");
-        size--;
-        i++;
-    }
-    free_matrix(map);
-    return(temp);
+	char **temp;
+	int size;
+	size = size_dp(map);
+	temp = ft_calloc(sizeof(char *), size + 1);
+	int i;
+	i = 0;
+	while (size)
+	{
+		temp[i] = ft_strtrim(map[i], "\n");
+		size--;
+		i++;
+	}
+	free_matrix(map);
+	return (temp);
 }

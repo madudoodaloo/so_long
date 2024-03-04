@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 03:42:07 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 20:26:03 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:20:41 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	check_pos(char **temp, t_game *game, int x, int y)
 	return (0);
 }
 
-
 static void	flood_fill(char **temp, t_game *game, int x, int y)
 {
 	if (check_pos(temp, game, x + 1, y))
@@ -85,7 +84,6 @@ static void	flood_fill(char **temp, t_game *game, int x, int y)
 int	check_path(t_game *game, char **map)
 {
 	char	**temp;
-	
 
 	game->temp = cpy_matrix(map, game->height);
 	temp = game->temp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:22:40 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:45:02 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:20:04 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	put_img(t_prog *prog, void *img, int x, int y)
 
 void	load_imgs(t_prog *prog, t_game *game)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (game->map[i])
