@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 21:44:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 22:20:12 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:45:33 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	game_init(t_prog *prog)
 	get_imgs(&prog->game, prog);
 	load_imgs(prog, &prog->game);
 	mlx_key_hook(prog->win, key_handler, prog);
-	mlx_hook(prog->win, 17, 0, exit_and_free, &prog->game);
+	mlx_hook(prog->win, 17, 0, exit_and_free, prog);
 	mlx_loop(prog->mlx);
 }
 
