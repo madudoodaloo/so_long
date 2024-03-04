@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:16:04 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 06:29:22 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:52:31 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	ft_strlens(const char *str)
 	if (!str)
 		return (0);
 	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
 		i++;
 	return (i);
 }
@@ -44,8 +46,8 @@ char	*ft_strjoin(char *line, char *buff)
 		free(line);
 	while (buff[j])
 	{
-		new[i++] = buff[j++];
-		if (buff[j] == '\n')
+		new[i++] = buff[j];
+		if (buff[j++] == '\n')
 			break ;
 	}
 	new[i] = '\0';

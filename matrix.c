@@ -6,15 +6,15 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:09:50 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:37:49 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:49:17 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	**get_matrix(int fd, int counter, char **map)
+char **get_matrix(int fd, int counter, char **map)
 {
-	char	*line;
+	char *line;
 
 	line = get_next_line(fd);
 	if (line)
@@ -25,11 +25,12 @@ char	**get_matrix(int fd, int counter, char **map)
 	return (map);
 }
 
+/* nao esquecer alterar o h e o w depois de tar trim do mapa final */
 // attention: the width and height values do not match indexes.
 // to get the maximum index, subtract 1
-static int	is_rect(t_game *game, char **map)
+static int is_rect(t_game *game, char **map)
 {
-	int	h;
+	int h;
 
 	h = 0;
 	game->width = ft_strlen(map[h]);
@@ -44,10 +45,10 @@ static int	is_rect(t_game *game, char **map)
 	return (1);
 }
 
-static int	check_walls(char **map)
+static int check_walls(char **map)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	while (map[i])
@@ -70,10 +71,10 @@ static int	check_walls(char **map)
 	return (1);
 }
 
-static int	check_chars(t_game *game, char **map)
+static int check_chars(t_game *game, char **map)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = -1;
 	while (map[++i])
@@ -99,15 +100,33 @@ static int	check_chars(t_game *game, char **map)
 	return (1);
 }
 
-int	check_matrix(t_prog *prog, t_game *game, char **map)
+void update_size(t_game *game)
+{
+	int h;
+	
+	h = 0;
+	//printf("%d\n", game->width);
+	game->width = ft_strlen(game->map[0]);
+	printf("%d\n", game->width);
+	//printf("%d\n", game->height);
+	while (game->map[h])
+			h++;
+	game->height = h;
+	printf("%d\n", game->height);
+
+}
+
+int check_matrix(t_prog *prog, t_game *game, char **map)
 {
 	if (!is_rect(game, map))
 		return (print_error(4, prog));
-	else if (!check_walls(map))
+	prog->game.map = trim_nl(map);
+	update_size(game);
+	if (!check_walls(prog->game.map))
 		return (print_error(5, prog));
-	else if (!check_chars(game, map))
+	else if (!check_chars(game, prog->game.map))
 		return (print_error(6, prog));
-	else if (!check_path(game, map))
+	else if (!check_path(game, prog->game.map))
 		return (print_error(7, prog));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 18:02:54 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 20:47:10 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ int			key_handler(int key, t_prog *prog);
 /* print in terminal */
 void		counter(t_prog *prog);
 int			print_error(int n, t_prog *prog);
+
+/* trim */
+char **trim_nl(char **map);
+void update_size(t_game *game);
+
+
 
 /* debug.c */
 // void printhere(char **str);
