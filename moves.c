@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 23:44:44 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 16:48:59 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:28:24 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 static void	moves_ad(int x, t_prog *prog, t_game *game)
 {
-	if (game->map[game->p.pos.y] \
-		[game->p.pos.x + x] == 'C')
+	if (game->map[game->p.pos.y][game->p.pos.x + x] == 'C')
 	{
 		game->c.count--;
 		game->map[game->p.pos.y][game->p.pos.x] = '0';
 		game->p.pos.x += x;
 		game->map[game->p.pos.y][game->p.pos.x] = 'P';
 	}
-	else if (game->map[game->p.pos.y] \
-			[game->p.pos.x + x] == '0')
+	else if (game->map[game->p.pos.y][game->p.pos.x + x] == '0')
 	{
 		game->map[game->p.pos.y][game->p.pos.x] = '0';
 		game->p.pos.x += x;
@@ -35,16 +33,14 @@ static void	moves_ad(int x, t_prog *prog, t_game *game)
 
 static void	moves_ws(int y, t_prog *prog, t_game *game)
 {
-	if (game->map[game->p.pos.y + y] \
-		[game->p.pos.x] == 'C')
+	if (game->map[game->p.pos.y + y][game->p.pos.x] == 'C')
 	{
 		game->c.count--;
 		game->map[game->p.pos.y][game->p.pos.x] = '0';
 		game->p.pos.y += y;
 		game->map[game->p.pos.y][game->p.pos.x] = 'P';
 	}
-	else if (game->map[game->p.pos.y + y] \
-			[game->p.pos.x] == '0')
+	else if (game->map[game->p.pos.y + y][game->p.pos.x] == '0')
 	{
 		game->map[game->p.pos.y][game->p.pos.x] = '0';
 		game->p.pos.y += y;
@@ -56,10 +52,10 @@ static void	moves_ws(int y, t_prog *prog, t_game *game)
 
 void	move_y(int y, t_prog *prog, t_game *game)
 {
-	t_pos   p_pos;
+	t_pos	p_pos;
 
 	p_pos = game->p.pos;
-	if (game->map[p_pos.y + y][p_pos.x] != '1'\
+	if (game->map[p_pos.y + y][p_pos.x] != '1' \
 		&& game->map[p_pos.y + y][p_pos.x] != 'E')
 		moves_ws(y, prog, game);
 	else if (game->map[p_pos.y + y][p_pos.x] == 'E')
@@ -70,10 +66,9 @@ void	move_y(int y, t_prog *prog, t_game *game)
 
 void	move_x(int x, t_prog *prog, t_game *game)
 {
-	t_pos   p_pos;
+	t_pos	p_pos;
 
 	p_pos = game->p.pos;
-	printf("move game img ptr: %p\n", game->p.img.img);
 	if (game->p.img.img)
 		mlx_destroy_image(prog->mlx, game->p.img.img);
 	if (x > 0 && game->c.count)
@@ -84,8 +79,8 @@ void	move_x(int x, t_prog *prog, t_game *game)
 		game->p.img.img = new_img("./assets/player_left.xpm", prog);
 	else
 		game->p.img.img = new_img("./assets/player_left_flower.xpm", prog);
-	if (game->map[p_pos.y][p_pos.x + x] != '1'\
-		&& game->map[p_pos.y][p_pos.x + x] != 'E')
+	if (game->map[p_pos.y][p_pos.x + x] != '1' \
+			&& game->map[p_pos.y][p_pos.x + x] != 'E')
 		moves_ad(x, prog, game);
 	else if (game->map[p_pos.y][p_pos.x + x] == 'E')
 		check_game_over(prog);
@@ -93,11 +88,11 @@ void	move_x(int x, t_prog *prog, t_game *game)
 	load_imgs(prog, game);
 }
 
-int key_handler(int key, t_prog *prog)
+int	key_handler(int key, t_prog *prog)
 {
-    if (key == ESC)
+	if (key == ESC)
 		exit_and_free(prog);
-    else if (key == A_KEY)
+	else if (key == A_KEY)
 		move_x(-1, prog, &prog->game);
 	else if (key == D_KEY)
 		move_x(1, prog, &prog->game);

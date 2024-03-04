@@ -6,7 +6,7 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:22:40 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 16:55:50 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:23:51 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	load_imgs(t_prog *prog, t_game *game)
 				put_img(prog, game->wall.img.img, j, i);
 			else if (game->map[i][j] == '0')
 				put_img(prog, game->floor.img.img, j, i);
-			else if (game->map[i][j] == 'P' /*&& game->c.count*/) {
-				printf("game img ptr: %p\n", game->p.img.img);
+			else if (game->map[i][j] == 'P')
 				put_img(prog, game->p.img.img, j, i);
-			}
             else if (game->map[i][j] == 'E' && game->c.count)
 				put_img(prog, game->e.img.img, j, i);
 			else if (game->map[i][j] == 'E' && !game->c.count)
@@ -53,8 +51,6 @@ void	*new_img(char *path, t_prog *prog)
 {
 	void	*img;
 	
-
-	printf("%s\n", path);
 	img = mlx_xpm_file_to_image(prog->mlx, path, &prog->w, &prog->h);
 	if (!img)
 		print_error(8, prog);
@@ -66,7 +62,6 @@ void	get_imgs(t_game *game, t_prog *prog)
 	game->c.img.img = new_img("./assets/collect.xpm", prog);
 	game->e.img.img = new_img("./assets/exit_false.xpm", prog);
 	game->p.img.img = new_img("./assets/player_left.xpm", prog);
-	printf("game img ptr: %p\n", game->p.img.img);
 	game->wall.img.img = new_img("./assets/wall.xpm", prog);
 	game->floor.img.img = new_img("./assets/floor.xpm", prog);
     game->e_eog.img.img = new_img("./assets/exit_true.xpm", prog);

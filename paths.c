@@ -6,16 +6,16 @@
 /*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 03:42:07 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 16:26:40 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:28:56 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static char **cpy_matrix(char **src, int height)
+static char	**cpy_matrix(char **src, int height)
 {
 	int		i;
-	char 	**cpy;
+	char	**cpy;
 
 	i = -1;
 	cpy = (char **)malloc(sizeof(char *) * (height + 1));
@@ -24,8 +24,8 @@ static char **cpy_matrix(char **src, int height)
 	while (++i < height)
 		cpy[i] = ft_strdup(src[i]);
 	cpy[i] = NULL;
-    if (i != height)
-    {
+	if (i != height)
+	{
 		free_matrix(cpy);
 		return (NULL);
 	}
@@ -81,21 +81,21 @@ static void	flood_fill(char **temp, t_game *game, int x, int y)
 		flood_fill(temp, game, x, y - 1);
 }
 
-int check_path(t_game *game, char **map)
+int	check_path(t_game *game, char **map)
 {
-    char    **temp;
-    
-    game->temp = cpy_matrix(map, game->height);
-    temp = game->temp;
-    if (!temp)
+	char **temp;
+
+	game->temp = cpy_matrix(map, game->height);
+	temp = game->temp;
+	if (!temp)
 		return (0);
-    get_coord(game, &game->p, 'P');
-    flood_fill(temp, game, game->p.pos.x, game->p.pos.y);
-    while(*temp != NULL)
-    {
-        if (str_srch(*temp, 'C') || str_srch(*temp, 'E'))
-            return (0);
-        temp++;
-    }
-    return (1);
+	get_coord(game, &game->p, 'P');
+	flood_fill(temp, game, game->p.pos.x, game->p.pos.y);
+	while (*temp != NULL)
+	{
+		if (str_srch(*temp, 'C') || str_srch(*temp, 'E'))
+			return (0);
+		temp++;
+	}
+	return (1);
 }
