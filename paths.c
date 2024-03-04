@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 03:42:07 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 07:18:15 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:26:40 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char **cpy_matrix(char **src, int height)
+static char **cpy_matrix(char **src, int height)
 {
 	int		i;
 	char 	**cpy;
 
 	i = -1;
 	cpy = (char **)malloc(sizeof(char *) * (height + 1));
-    if (!cpy)
-        return (NULL);
+	if (!cpy)
+		return (NULL);
 	while (++i < height)
 		cpy[i] = ft_strdup(src[i]);
 	cpy[i] = NULL;
@@ -32,10 +32,8 @@ char **cpy_matrix(char **src, int height)
 	return (cpy);
 }
 
-
 // returns coords in the right index obviously
-
-void	get_coord(t_game *game, t_obj *token, char c)
+void	get_coord(t_game *game, t_obj *obj, char c)
 {
 	int	i;
 	int	j;
@@ -48,8 +46,8 @@ void	get_coord(t_game *game, t_obj *token, char c)
 		{
 			if (game->map[i][j] == c)
 			{
-				token->x = j;
-				token->y = i;
+				obj->pos.x = j;
+				obj->pos.y = i;
 			}
 			j++;
 		}
@@ -59,7 +57,6 @@ void	get_coord(t_game *game, t_obj *token, char c)
 
 int	check_pos(char **temp, t_game *game, int x, int y)
 {
-	// printf("x %d, y %d", x, y);
 	if (y < 0 || y >= game->height || x < 0 || x >= game->width)
 		return (0);
 	if (temp[y][x] == 'E')
@@ -72,14 +69,12 @@ int	check_pos(char **temp, t_game *game, int x, int y)
 	return (0);
 }
 
-void	flood_fill(char **temp, t_game *game, int x, int y)
+static void	flood_fill(char **temp, t_game *game, int x, int y)
 {
-	// printhere(temp);
-	// printf("\n$\n");
 	if (check_pos(temp, game, x + 1, y))
 		flood_fill(temp, game, x + 1, y);
 	if (check_pos(temp, game, x - 1, y))
-			flood_fill(temp, game, x - 1, y);
+		flood_fill(temp, game, x - 1, y);
 	if (check_pos(temp, game, x, y + 1))
 		flood_fill(temp, game, x, y + 1);
 	if (check_pos(temp, game, x, y - 1))
@@ -92,11 +87,10 @@ int check_path(t_game *game, char **map)
     
     game->temp = cpy_matrix(map, game->height);
     temp = game->temp;
-	printhere(temp);
     if (!temp)
 		return (0);
     get_coord(game, &game->p, 'P');
-    flood_fill(temp, game, game->p.y, game->p.y);
+    flood_fill(temp, game, game->p.pos.x, game->p.pos.y);
     while(*temp != NULL)
     {
         if (str_srch(*temp, 'C') || str_srch(*temp, 'E'))

@@ -4,9 +4,9 @@ SRCS =$(wildcard *.c) gnl/get_next_line_utils.c gnl/get_next_line.c
 
 
 OBJS = ${SRCS:.c=.o}
-CC = cc
+CC = clang
 RM = rm -rf
-CFLAGS = #-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 all: $(NAME)
 

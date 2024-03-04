@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 07:22:40 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 08:46:21 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:55:50 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	put_img(t_prog *prog, void *img, int x, int y)
 	mlx_put_image_to_window(prog->mlx, prog->win, img, x * 64, y * 64);
 }
 
-void	draw_imgs(t_prog *prog, t_game *game)
+void	load_imgs(t_prog *prog, t_game *game)
 {
 	int		i;
 	int		j;
@@ -31,17 +31,17 @@ void	draw_imgs(t_prog *prog, t_game *game)
 		{
 			if (game->map[i][j] == '1')
 				put_img(prog, game->wall.img.img, j, i);
-			if (game->map[i][j] == '0')
+			else if (game->map[i][j] == '0')
 				put_img(prog, game->floor.img.img, j, i);
-			if (game->map[i][j] == 'P' && game->cc)
+			else if (game->map[i][j] == 'P' /*&& game->c.count*/) {
+				printf("game img ptr: %p\n", game->p.img.img);
 				put_img(prog, game->p.img.img, j, i);
-			if (game->map[i][j] == 'P' && !game->cc)
-				put_img(prog, game->p_eog.img.img, j, i);
-            if (game->map[i][j] == 'E' && game->cc)
+			}
+            else if (game->map[i][j] == 'E' && game->c.count)
 				put_img(prog, game->e.img.img, j, i);
-			if (game->map[i][j] == 'E' && !game->cc)
+			else if (game->map[i][j] == 'E' && !game->c.count)
 				put_img(prog, game->e_eog.img.img, j, i);
-			if (game->map[i][j] == 'C')
+			else if (game->map[i][j] == 'C')
 				put_img(prog,game->c.img.img, j, i);
 			j++;
 		}
@@ -49,23 +49,25 @@ void	draw_imgs(t_prog *prog, t_game *game)
 	}
 }
 
-void	*new_file_img(char *path, t_prog *prog)
+void	*new_img(char *path, t_prog *prog)
 {
 	void	*img;
+	
 
+	printf("%s\n", path);
 	img = mlx_xpm_file_to_image(prog->mlx, path, &prog->w, &prog->h);
 	if (!img)
-		return NULL;//error(path, &prog);
+		print_error(8, prog);
 	return (img);
 }
 
 void	get_imgs(t_game *game, t_prog *prog)
 {
-	game->c.img.img = new_file_img("./assets/collect.xpm", prog);
-	game->e.img.img = new_file_img("./assets/e.xpm", prog);
-	game->p.img.img = new_file_img("./assets/p.xpm", prog);
-	game->wall.img.img = new_file_img("./assets/wall.xpm", prog);
-	game->floor.img.img = new_file_img("./assets/floor.xpm", prog);
-	game->p_eog.img.img = new_file_img("./assets/p_eog.xpm", prog);
-    game->e_eog.img.img = new_file_img("./assets/e_eog.xpm", prog);
+	game->c.img.img = new_img("./assets/collect.xpm", prog);
+	game->e.img.img = new_img("./assets/exit_false.xpm", prog);
+	game->p.img.img = new_img("./assets/player_left.xpm", prog);
+	printf("game img ptr: %p\n", game->p.img.img);
+	game->wall.img.img = new_img("./assets/wall.xpm", prog);
+	game->floor.img.img = new_img("./assets/floor.xpm", prog);
+    game->e_eog.img.img = new_img("./assets/exit_true.xpm", prog);
 }

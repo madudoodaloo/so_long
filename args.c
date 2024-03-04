@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 21:52:48 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 05:10:46 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 02:13:11 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int is_ber(char *file)
+static int is_ber(char *file)
 {
     char    *format;
     int     i;
@@ -33,16 +33,13 @@ int is_ber(char *file)
     return (0);
 }
 
-int check_args(int ac, char *file)
+int check_args(t_prog *prog, int ac, char *file)
 {
     if (ac < 2)
-        return(1);
+        return(print_error(1, prog));
     else if (ac > 2)
-        return(1);
+        return(print_error(1, prog));
     else if (!is_ber(file))
-        return(2);
+        return(print_error(2, prog));
     return (0);
 }
-
-// 10: "ERROR: Insert one map to launch, try:\n./so_long map.ber\n"
-// 2: "ERROR: Insert map in .ber format\n"

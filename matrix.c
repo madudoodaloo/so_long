@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:09:50 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 06:33:36 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:59:05 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void printhere(char **str)
-{
-	int i = -1;
-	while (str[++i])
-		printf("%s$\n", str[i]);
-	return ;
-}
 
 char **get_matrix(int fd, int counter, char **map)
 {
@@ -35,12 +27,14 @@ char **get_matrix(int fd, int counter, char **map)
 
 // attention: the width and height values do not match indexes.
 // to get the maximum index, subtract 1
-int is_rect(t_game *game, char **map)
+static int is_rect(t_game *game, char **map)
 {
     int h;
 
 	h = 0;
 	game->width = ft_strlen(map[h]);
+	if (game->width == 0)
+		return (0);
 	while (map[++h])
 	{
 		if (game->width != ft_strlen(map[h]))
@@ -50,7 +44,7 @@ int is_rect(t_game *game, char **map)
 	return (1);
 }
 
-int check_walls(t_game *game, char **map)
+static int check_walls(char **map)
 {
 	int i = 0;
 	
@@ -74,7 +68,7 @@ int check_walls(t_game *game, char **map)
 	return (1);
 }
 
-int check_chars(t_game *game, char **map)
+static int check_chars(t_game *game, char **map)
 {
 	int i;
 	int j;
@@ -90,7 +84,7 @@ int check_chars(t_game *game, char **map)
 			else if (map[i][j] == 'P')
 				game->p.count++;
 			else if (map[i][j] == 'C')
-				game->cc++;
+				game->c.count++;
 			else if (map[i][j] != '0' && map[i][j] != '1')
 				return (0);
 			j++;
@@ -99,7 +93,7 @@ int check_chars(t_game *game, char **map)
 			return (0);
 		i++;
 	}
-	if (game->e.count < 1 || game->p.count < 1 || game->cc < 1)
+	if (game->e.count < 1 || game->p.count < 1 || game->c.count < 1)
 		return (0);
 	else if (game->e.count > 1 || game->p.count > 1)
 		return (0);
@@ -107,21 +101,16 @@ int check_chars(t_game *game, char **map)
 }
 
 
-int check_matrix(t_game *game, char **map)
+int check_matrix(t_prog *prog, t_game *game, char **map)
 {
     if(!is_rect(game, map))
-        return (4);
-	else if (!check_walls(game, map))
-		return (5);
+        return (print_error(4, prog));
+	else if (!check_walls(map))
+		return (print_error(5, prog));
 	else if (!check_chars(game, map))
-		return (6);
+		return (print_error(6, prog));
 	else if (!check_path(game, map))
-		return (7);
-	return (0);
+		return (print_error(7, prog));
+	return (1);
 }
 
-// 4: "ERROR: wrong map format, must be a rectangle with the fewest nr of line breaks possible\n"
-// 5: "ERROR: map should be surrounded by '1' chars\n"
-// 6: "ERROR: map sould only contain one 'P' and 'E', at least one 'C' and '0' and '1'\n"
-// eliminado: "ERROR: failed to copy matrix\n"
-// 7: "ERROR: map has no valid path\n"

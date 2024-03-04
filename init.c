@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 04:13:35 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 08:42:24 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:57:01 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,40 @@ static void init_img(t_img *img)
     img->img=NULL;
 }
 
+static void init_pos(t_pos *pos)
+{
+    pos->x = 0;
+    pos->y = 0;
+}
+
 static void init_obj(t_obj *obj) 
 {
+    init_pos(&obj->pos);
     init_img(&obj->img);
-    obj->x=0;
-    obj->y=0;
     obj->count=0;
 }
 
 static void init_game(t_game *game)
 {
     game->fd = -1;
-    game->cc = 0;
+    game->init = 0;
+    game->moves = 0;
     game->width = 0;
     game->height = 0;
     game->map = NULL;
     game->temp = NULL;
-    //init_obj(game->c); /* seg fault alert */
+    init_obj(&game->c);
     init_obj(&game->e);
     init_obj(&game->p);
     init_obj(&game->wall);
     init_obj(&game->floor);
-    init_obj(&game->p_eog);
     init_obj(&game->e_eog);
-    init_obj(&game->c);
-
 }
 
-void init(t_prog *prog)
+void init_var(t_prog *prog)
 {
-    prog->h = 0;
-    prog->w = 0;
+    prog->h = 64;
+    prog->w = 64;
     prog->mlx = NULL;
     prog->win = NULL;
     init_game(&prog->game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/01 08:46:55 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:55:43 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,48 @@
 # define SO_LONG_H
 
 # include "gnl/get_next_line.h"
+# include "mlx_linux/mlx.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
-# include "mlx_linux/mlx.h"
-#include <unistd.h>
 
 #define ESC 65307
-#define UP 65362
-#define DOWN 65364
-#define LEFT 65361
-#define RIGHT 65363
-#define SQSIZE 64
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
 
-typedef struct img_s
+typedef struct s_img
 {
 	int		width;
 	int		height;
 	void	*img;
 }			t_img;
 
-typedef struct s_obj
+typedef	struct s_pos
 {
 	int x;
 	int y;
-	int count;
+}	t_pos;
+
+typedef struct s_obj
+{
+	t_pos pos;
 	t_img img;
+	int count;
 }	t_obj;
 
 typedef struct s_game
 {
-	int		fd;
-	int		cc; /* collectibles count */
 	t_obj	c;
 	t_obj 	e;
 	t_obj	p;
 	t_obj 	wall;
 	t_obj 	floor;
-	t_obj	p_eog; /* duck with flower */
-	t_obj	e_eog; /* pata happy */
+	t_obj	e_eog;
+	int		fd;
+	int		init;
+	int		moves;
 	int 	width; /* x */
 	int 	height; /* y */
 	char	**map;
@@ -68,44 +71,53 @@ typedef struct s_prog
 	int h;
 }			t_prog;
 
-
-
 /* init */
-void init(t_prog *prog);
-void end_prog(t_prog *prog);
-
+void init_var(t_prog *prog);
+//void game_init(t_prog *prog);
+//void end_prog(t_prog *prog);
 
 /* args.c */
-int check_args(int ac, char *file);
-int is_ber(char *file);
+int check_args(t_prog *prog, int ac, char *file);
 
-/* matrix.c */
-char **get_matrix(int fd, int counter, char **map);
-int is_rect(t_game *game, char **map);
-int check_walls(t_game *game, char **map);
-int check_chars(t_game *game, char **map);
-int check_matrix(t_game *game, char **map);
+/* debug.c */
+void printhere(char **str);
 
-/* paths.c */
-char **cpy_matrix(char **src, int height);
-void	get_coord(t_game *game, t_obj *token, char c);
-int	check_pos(char **temp, t_game *game, int x, int y);
-void	flood_fill(char **temp, t_game *game, int x, int y);
-int check_path(t_game *game, char **map);
+/* init.c */
+void init_var(t_prog *prog);
 
-/* str_utils.c */
+/* libft utils */
 int ft_strlen(char *str);
 char *ft_strdup(char *str);
 int	str_srch(char *str, char c);
+char	*ft_itoa(int a);
+
+/* matrix.c */
+char **get_matrix(int fd, int counter, char **map);
+int check_matrix(t_prog *prog, t_game *game, char **map);
+
+/* paths.c */
+void	get_coord(t_game *game, t_obj *obj, char c);
+int	check_pos(char **temp, t_game *game, int x, int y);
+int check_path(t_game *game, char **map);
+
+/* free and exit*/
 void    free_matrix(char **map);
-void printhere(char **str);
+int    exit_and_free(t_prog *prog);
+void	check_game_over(t_prog *prog);
 
 /* imgs */
 void	put_img(t_prog *prog, void *img, int x, int y);
-void	draw_imgs(t_prog *prog, t_game *game);
-void	*new_file_img(char *path, t_prog *prog);
+void	load_imgs(t_prog *prog, t_game *game);
+void	*new_img(char *path, t_prog *prog);
 void	get_imgs(t_game *game, t_prog *prog);
 
+/* moves */
+void	move_x(int x, t_prog *prog, t_game *game);
+void	move_y(int y, t_prog *prog, t_game *game);
+int key_handler(int key, t_prog *prog);
 
+/* print in terminal */
+void counter(t_prog *prog);
+int print_error(int n, t_prog *prog);
 
 #endif
