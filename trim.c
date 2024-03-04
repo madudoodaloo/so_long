@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:00:39 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 22:20:50 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:25:02 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	update_size(t_game *game)
+{
+	int	h;
+
+	h = 0;
+	game->width = ft_strlen(game->map[0]);
+	while (game->map[h])
+		h++;
+	game->height = h;
+}
 
 static int	ft_setchecker(char const *set, char c)
 {
@@ -63,12 +74,13 @@ static int	size_dp(char **map)
 
 char	**trim_nl(char **map)
 {
-	char **temp;
-	int size;
+	char	**temp;
+	int		size;
+	int		i;
+
+	i = 0;
 	size = size_dp(map);
 	temp = ft_calloc(sizeof(char *), size + 1);
-	int i;
-	i = 0;
 	while (size)
 	{
 		temp[i] = ft_strtrim(map[i], "\n");

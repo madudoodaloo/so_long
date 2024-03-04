@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:09:50 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 22:20:33 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 22:24:47 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,6 @@ static int	check_chars(t_game *game, char **map)
 	else if (game->e.count > 1 || game->p.count > 1)
 		return (0);
 	return (1);
-}
-
-void	update_size(t_game *game)
-{
-	int	h;
-
-	h = 0;
-	game->width = ft_strlen(game->map[0]);
-	while (game->map[h])
-		h++;
-	game->height = h;
 }
 
 int	check_matrix(t_prog *prog, t_game *game, char **map)
