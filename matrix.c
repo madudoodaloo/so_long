@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:09:50 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:26:19 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:37:49 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static int	check_chars(t_game *game, char **map)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (map[i])
+	i = -1;
+	while (map[++i])
 	{
 		j = 0;
 		while (map[i][j])
@@ -91,9 +91,6 @@ static int	check_chars(t_game *game, char **map)
 				return (0);
 			j++;
 		}
-		if (game->e.count > 1 || game->p.count > 1)
-			return (0);
-		i++;
 	}
 	if (game->e.count < 1 || game->p.count < 1 || game->c.count < 1)
 		return (0);

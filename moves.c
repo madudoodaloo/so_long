@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 23:44:44 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:28:24 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:45:02 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ void	move_x(int x, t_prog *prog, t_game *game)
 	if (game->p.img.img)
 		mlx_destroy_image(prog->mlx, game->p.img.img);
 	if (x > 0 && game->c.count)
-		game->p.img.img = new_img("./assets/player_right.xpm", prog);
+		game->p.img.img = new_img("./textures/player_right.xpm", prog);
 	else if (x > 0 && !game->c.count)
-		game->p.img.img = new_img("./assets/player_right_exit.xpm", prog);
+		game->p.img.img = new_img("./textures/player_right_exit.xpm", prog);
 	else if (game->c.count)
-		game->p.img.img = new_img("./assets/player_left.xpm", prog);
+		game->p.img.img = new_img("./textures/player_left.xpm", prog);
 	else
-		game->p.img.img = new_img("./assets/player_left_flower.xpm", prog);
+		game->p.img.img = new_img("./textures/player_left_flower.xpm", prog);
 	if (game->map[p_pos.y][p_pos.x + x] != '1' \
 			&& game->map[p_pos.y][p_pos.x + x] != 'E')
 		moves_ad(x, prog, game);

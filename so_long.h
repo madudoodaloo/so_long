@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 23:42:32 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:29:43 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:02:54 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "gnl/get_next_line.h"
-# include "mlx_linux/mlx.h"
+# include "../gnl/get_next_line.h"
+# include "../mlx_linux/mlx.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -56,8 +56,8 @@ typedef struct s_game
 	int		fd;
 	int		init;
 	int		moves;
-	int 	width;
-	int 	height;
+	int		width;
+	int		height;
 	char	**map;
 	char	**temp;
 }			t_game;
@@ -70,11 +70,6 @@ typedef struct s_prog
 	int		w;
 	int		h;
 }			t_prog;
-
-/* init */
-void		init_var(t_prog *prog);
-// void game_init(t_prog *prog);
-// void end_prog(t_prog *prog);
 
 /* args.c */
 int			check_args(t_prog *prog, int ac, char *file);
@@ -93,8 +88,6 @@ char		**get_matrix(int fd, int counter, char **map);
 int			check_matrix(t_prog *prog, t_game *game, char **map);
 
 /* paths.c */
-void		get_coord(t_game *game, t_obj *obj, char c);
-int			check_pos(char **temp, t_game *game, int x, int y);
 int			check_path(t_game *game, char **map);
 
 /* free and exit*/

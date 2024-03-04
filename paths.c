@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 03:42:07 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:28:56 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 18:03:05 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	**cpy_matrix(char **src, int height)
 }
 
 // returns coords in the right index obviously
-void	get_coord(t_game *game, t_obj *obj, char c)
+static void	get_coord(t_game *game, t_obj *obj, char c)
 {
 	int	i;
 	int	j;
@@ -55,7 +55,7 @@ void	get_coord(t_game *game, t_obj *obj, char c)
 	}
 }
 
-int	check_pos(char **temp, t_game *game, int x, int y)
+static int	check_pos(char **temp, t_game *game, int x, int y)
 {
 	if (y < 0 || y >= game->height || x < 0 || x >= game->width)
 		return (0);
@@ -83,7 +83,7 @@ static void	flood_fill(char **temp, t_game *game, int x, int y)
 
 int	check_path(t_game *game, char **map)
 {
-	char **temp;
+	char	**temp;
 
 	game->temp = cpy_matrix(map, game->height);
 	temp = game->temp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-c <msilva-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: msilva-c <msilva-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 21:44:18 by msilva-c          #+#    #+#             */
-/*   Updated: 2024/03/04 17:26:14 by msilva-c         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:35:19 by msilva-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	game_init(t_prog *prog)
 {
 	prog->mlx = mlx_init();
-	prog->win = mlx_new_window(prog->mlx, prog->game.width * 64,
+	prog->win = mlx_new_window(prog->mlx, prog->game.width * 64, \
 			prog->game.height * 64, "SO_LONG");
 	get_imgs(&prog->game, prog);
 	load_imgs(prog, &prog->game);
@@ -26,7 +26,7 @@ void	game_init(t_prog *prog)
 
 int	main(int ac, char **av)
 {
-	t_prog prog;
+	t_prog	prog;
 
 	init_var(&prog);
 	if (!check_args(&prog, ac, av[1]))
